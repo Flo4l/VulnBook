@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{application.name}"></title>
+    <!--/* JQuery */-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--/* Popper JS */-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!--/* Bootstrap */-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!--/* Fontawesome */-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
+    <!-- Own Less Stylesheet -->
+    <link rel="stylesheet/less" type="text/css" th:href="@{/css/general.less}">
+    <!--/* LESS */-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+</head>
+<body>
+
+<div th:fragment="post" class="card-body" style="margin: 10px;border: groove;">
+    <h4 class="card-title">Peter Schmidt</h4>
+    <p class="card-text">Heute ist das Wetter sehr gut!<br/>Ich denke es wäre spaßig schwimmen zu gehen.<br/><br/>Mag
+        jemand zusammen ins Freibad gehen?</p>
+    <button class="btn btn-primary btn-sm text-left border rounded float-right" type="button" style="padding: 3px;">
+        Like
+    </button>
+</div>
+
+</body>
+</html>
