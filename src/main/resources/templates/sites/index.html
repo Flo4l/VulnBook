@@ -13,7 +13,7 @@
     <!--/* Fontawesome */-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
     <!-- Own Less Stylesheet -->
-    <link rel="stylesheet/less" type="text/css" th:href="@{/css/general.less}">
+    <link rel="stylesheet/less" type="text/css" th:href="@{/css/styles.less}">
     <!--/* LESS */-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
@@ -21,11 +21,14 @@
 
     <div th:replace="/fragments/header.html :: header"></div>
 
-    <div class="container">
-        <div class="card" th:insert="/fragments/post.html :: post">
-
-        </div>
+    <div class="container feed">
+        <div th:insert="/fragments/post.html :: post"></div>
+        <div th:insert="/fragments/post.html :: post"></div>
+        <div th:insert="/fragments/post.html :: post"></div>
     </div>
+
+
+    <div th:replace="/fragments/footer.html :: footer"></div>
 
 </body>
 </html>
