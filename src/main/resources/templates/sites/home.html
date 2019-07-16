@@ -6,11 +6,10 @@
 <div class="container">
         <div class="text">
             <h1 th:text="#{application.name}"></h1>
-            <h2>Teilen Sie sich der Welt mit!</h2>
-            <p>Posten Sie nach Belieben was auch imer Sie anderen mitteilen möchten. <br/>
-                Genießen Sie dabei die besondere Sicherheit dieser Plattform.</p>
-            <button class="btn btn-outline-light btn-lg" type="button">Einloggen</button>
-            <button class="btn btn-outline-light btn-lg" type="button">Registrieren</button>
+            <h2 th:text="#{home.heading}"></h2>
+            <p th:text="#{home.subheading}"></p>
+            <button class="btn btn-outline-light btn-lg" type="button" th:text="#{form.login}"></button>
+            <button class="btn btn-outline-light btn-lg" type="button" th:text="#{form.register}"></button>
         </div>
     </div>
 </div>

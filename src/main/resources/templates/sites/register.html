@@ -3,17 +3,15 @@
 <head th:replace="/fragments/head :: head"></head>
 <body class="login">
 
-<div class="header" th:insert="/fragments/header :: header"></div>
-
     <div>
         <form th:action="@{/register}" method="post">
             <h2 class="sr-only">Register Form</h2>
             <div class="illustration"><i class="fas fa-lock"></i></div>
-            <div class="form-group"><input class="form-control" type="email" name="username" placeholder="Username" /></div>
-            <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" /></div>
-            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Passwort" /></div>
-            <div class="form-group"><input class="form-control" type="password" name="password2" placeholder="Passwort" /></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Register</button></div>
+            <div class="form-group"><input class="form-control" type="email" name="username" th:placeholder="#{form.username}" /></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" th:placeholder="#{form.email}" /></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" th:placeholder="#{form.password}" /></div>
+            <div class="form-group"><input class="form-control" type="password" name="password2" th:placeholder="#{form.password}"  /></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit" th:text="#{form.register}"></button></div>
         </form>
     </div>
 
