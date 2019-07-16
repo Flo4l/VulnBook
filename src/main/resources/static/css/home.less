@@ -1,0 +1,47 @@
+
+.home {
+  background-image:url('/img/network2.jpg');
+  color:rgba(9, 162, 255, 0.75);
+  text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+  button {
+    margin-right: 25px;
+    width: 160px;
+    background-color: rgb(9, 147, 235);
+  }
+
+  .text {
+    max-width: 640px;
+    color: @font-light;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.15);
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    background-color: rgb(9, 124, 209);
+    border: 1px solid @primarydark;
+    margin-top: 150px;
+    max-width: max-content;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  h1 {
+    font-size: 65px;
+  }
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: currentColor;
+  z-index: 1;
+}

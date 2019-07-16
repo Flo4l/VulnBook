@@ -22,13 +22,18 @@
 <div th:fragment="post" class="container">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Peter Schmidt</h4>
-            <p class="card-text">Heute ist das Wetter sehr gut!<br/>Ich denke es wäre spaßig schwimmen zu gehen.<br/><br/>Mag
-                jemand zusammen ins Freibad gehen?</p>
-            <span class="likecounter">+0</span>
-            <button class="btn btn-primary border rounded float-right" type="button">
-                <span class="far fa-thumbs-up"></span>
-            </button>
+            <div class="row">
+                <div class="post-name col-10">Peter Schmidt</div>
+                <div class="post-date col-2">02.06.2019</div>
+            </div>
+            <div class="card-text">Heute ist das Wetter sehr gut!<br/>Ich denke es wäre spaßig schwimmen zu gehen.<br/><br/>Mag
+                jemand zusammen ins Freibad gehen?</div>
+            <div class="row">
+                <button class="btn btn-primary border rounded col-1 offset-10" type="button">
+                    <span class="far fa-thumbs-up"></span>
+                </button>
+                <div class="likecounter col-1">+0</div>
+            </div>
         </div>
     </div>
 </div>

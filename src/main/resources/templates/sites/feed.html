@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/head :: head"></head>
+<body>
+
+    <div th:replace="/fragments/header.html :: header"></div>
+
+    <div class="container feed">
+        <div class="post-form container">
+            <div class="card">
+                <div class="card-body">
+                    <form action="" method="post">
+                        <textarea class="post-input" name="text" placeholder="Poste etwas..." style="width: 100%;"></textarea>
+                        <button class="btn btn-primary border rounded float-right" type="button">posten</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="posts">
+            <div th:insert="/fragments/post.html :: post"></div>
+            <div th:insert="/fragments/post.html :: post"></div>
+            <div th:insert="/fragments/post.html :: post"></div>
+        </div>
+
+        <div class="container">
+            <div class="card">
+                <button class="btn btn-primary border rounded" type="button">Weitere laden</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="/fragments/footer.html :: footer"></div>
+
+</body>
+</html>

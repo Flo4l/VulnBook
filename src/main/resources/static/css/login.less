@@ -1,0 +1,54 @@
+
+.login {
+  height: 100%;
+  background-image: url("/img/oceansky.jpg");
+  background-size: cover;
+
+  form {
+    z-index: 2;
+    max-width: 320px;
+    width: 90%;
+    background-color: #1e2833;
+    padding: 40px;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+
+    .form-control {
+      background: none;
+      border: none;
+      border-bottom: 1px solid #434a52;
+      border-radius: 0;
+      box-shadow: none;
+      outline: none;
+      color: inherit;
+    }
+  }
+
+  .illustration {
+    text-align: center;
+    padding: 15px 0 20px;
+    font-size: 100px;
+    color: #2980ef;
+  }
+
+  .header {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.login::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
