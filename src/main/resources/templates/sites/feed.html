@@ -17,10 +17,10 @@
             </div>
         </div>
 
-        <div class="posts">
-            <div class="post" id="post-3" th:insert="/fragments/post.html :: post"></div>
-            <div class="post" id="post-2" th:insert="/fragments/post.html :: post"></div>
-            <div class="post" id="post-1" th:insert="/fragments/post.html :: post"></div>
+        <div class="posts" data-last="1">
+            <div class="post" th:insert="/fragments/post.html :: post"></div>
+            <div class="post" th:insert="/fragments/post.html :: post"></div>
+            <div class="post" th:insert="/fragments/post.html :: post"></div>
         </div>
 
         <div class="container">
@@ -29,8 +29,7 @@
             </div>
         </div>
     </div>
-
-
+    
     <div th:replace="/fragments/footer.html :: footer"></div>
 
 </body>
