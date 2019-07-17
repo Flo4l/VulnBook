@@ -23,7 +23,7 @@ public class UserRepository {
     public User getUserByUsername(String username) throws SQLException {
         Connection con = DatabaseService.getDataSource().getConnection();
         Statement stmt = con.createStatement();
-        String sql = "SELECT * FROM USER WHERE username = " + username;
+        String sql = "SELECT * FROM USER WHERE username = '" + username + "'";
         ResultSet rs = stmt.executeQuery(sql);
         if(rs.next()) {
             return getUser(rs);

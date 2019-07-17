@@ -2,35 +2,34 @@ package de.albers.vulnbook.user;
 
 import de.albers.vulnbook.user.exceptions.AlreadyRegisteredException;
 import de.albers.vulnbook.user.exceptions.FieldEmptyException;
+import de.albers.vulnbook.user.exceptions.IncorrectLoginException;
 import de.albers.vulnbook.user.exceptions.UnequalPasswordsException;
+import de.albers.vulnbook.user.services.LoginUserService;
 import de.albers.vulnbook.user.services.RegisterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.SQLException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
 
     private RegisterUserService registerUserService;
+    private LoginUserService loginUserService;
 
     @Autowired
-    public UserController(RegisterUserService registerUserService) {
+    public UserController(RegisterUserService registerUserService, LoginUserService loginUserService) {
         this.registerUserService = registerUserService;
+        this.loginUserService = loginUserService;
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        return "sites/login.html";
-    }
-
-    @PostMapping("/login")
-    public String loginUser(User user, BindingResult bindingResult, Model model) {
-        //TODO
+    public String getLoginPage(Model model, HttpServletRequest request) {
+        System.out.println(request.getRequestedSessionId());
         return "sites/login.html";
     }
 
@@ -39,8 +38,25 @@ public class UserController {
         return "sites/register.html";
     }
 
+    @PostMapping("/login")
+    public String loginUser(User user, Model model, HttpServletResponse response) {
+        try {
+            loginUserService.checkFieldEmpty(user);
+            loginUserService.checkCorrectLogin(user);
+            loginUserService.loginUser(user, response);
+        } catch (FieldEmptyException e) {
+            model.addAttribute("fieldEmpty", true);
+        } catch (IncorrectLoginException e) {
+            model.addAttribute("incorrectLogin", true);
+        } catch (Exception e) {
+            model.addAttribute("internalError", true);
+            e.printStackTrace();
+        }
+        return "sites/login.html";
+    }
+
     @PostMapping("/register")
-    public String registerUser(User user, String pass, BindingResult bindingResult, Model model) {
+    public String registerUser(User user, String pass, Model model) {
         try {
             registerUserService.checkFieldEmpty(user, pass);
             registerUserService.checkPasswordEqual(user.getPassword(), pass);
@@ -53,8 +69,8 @@ public class UserController {
             model.addAttribute("unequalPasswords", true);
         }catch (AlreadyRegisteredException e) {
             model.addAttribute("alredyRegistered", true);
-        } catch (SQLException e) {
-            model.addAttribute("sqlError", true);
+        } catch (Exception e) {
+            model.addAttribute("internalError", true);
             e.printStackTrace();
         }
         return "sites/register.html";

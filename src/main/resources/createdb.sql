@@ -12,7 +12,7 @@ CREATE OR REPLACE TABLE User (
 
 CREATE OR REPLACE TABLE Post (
   postid BIGINT NOT NULL AUTO_INCREMENT,
-  `time` DATETIME,
+  `time` TIMESTAMP,
   text TEXT,
   likes BIGINT,
   userid BIGINT,
@@ -23,7 +23,7 @@ CREATE OR REPLACE TABLE Post (
 CREATE OR REPLACE TABLE Session (
   sessionid BIGINT NOT NULL AUTO_INCREMENT,
   `key` TEXT,
-  expires DATETIME,
+  expires TIMESTAMP,
   userid BIGINT,
   PRIMARY KEY (sessionid),
   FOREIGN KEY (userid) REFERENCES user(userid)

@@ -8,8 +8,8 @@
             <h1 th:text="#{application.name}"></h1>
             <h2 th:text="#{home.heading}"></h2>
             <p th:text="#{home.subheading}"></p>
-            <button class="btn btn-outline-light btn-lg" type="button" th:text="#{form.login}"></button>
-            <button class="btn btn-outline-light btn-lg" type="button" th:text="#{form.register}"></button>
+            <a class="btn btn-outline-light btn-lg" type="button" th:text="#{form.login}" th:href="@{/login}"></a>
+            <a class="btn btn-outline-light btn-lg" type="button" th:text="#{form.register}" th:href="@{/register}"></a>
         </div>
     </div>
 </div>

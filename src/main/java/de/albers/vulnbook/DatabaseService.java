@@ -28,7 +28,7 @@ public class DatabaseService {
 
             dataSource.setMinimumIdle(3);
             dataSource.setMaximumPoolSize(10);
-            dataSource.setAutoCommit(false);
+            dataSource.setAutoCommit(true);
             dataSource.setLoginTimeout(3);
 
         } catch (IOException | SQLException e) {

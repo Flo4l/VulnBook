@@ -7,9 +7,16 @@
         <form th:action="@{/login}" method="post">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="fas fa-lock"></i></div>
-            <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" /></div>
-            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Passwort" /></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div><a href="#" class="forgot">Forgot your email or password?</a>
+            <div class="form-group"><input class="form-control" type="text" name="username" th:placeholder="#{form.username}" /></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" th:placeholder="#{form.password}" /></div>
+            <div th:if="${fieldEmpty}" class="error-text" th:text="#{error.fieldEmpty}"></div>
+            <div th:if="${incorrectLogin}" class="error-text" th:text="#{error.incorrectLogin}"></div>
+            <div th:if="${internalError}" class="error-text" th:text="#{error.internal}"></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit" th:text="#{form.login}"></button></div>
+            <div style="text-align: center">
+                <span th:text="#{login.notRegistered}"></span>
+                <a th:href="@{/register}" th:text="#{form.register}"></a>
+            </div>
         </form>
     </div>
 
