@@ -12,16 +12,6 @@ public class StdController {
         return "sites/feed.html";
     }
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        return "sites/login.html";
-    }
-
-    @GetMapping("/register")
-    public String registerPage(Model model) {
-        return "sites/register.html";
-    }
-
     @GetMapping({"/home", "/"})
     public String homePage(Model model) {
         return "sites/home.html";

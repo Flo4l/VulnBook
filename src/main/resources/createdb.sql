@@ -1,13 +1,13 @@
-DROP DATABASE IF EXISTS VulnBook
-CREATE DATABASE VulnBook
-USE VulnBook
+DROP DATABASE IF EXISTS VulnBook;
+CREATE DATABASE VulnBook;
+USE VulnBook;
 
 CREATE OR REPLACE TABLE User (
   userid BIGINT NOT NULL AUTO_INCREMENT,
   username TEXT,
   password TEXT,
   email TEXT,
-  PRIMARY KEY (userid)
+  PRIMARY KEY(userid)
 )Engine=InnoDb;
 
 CREATE OR REPLACE TABLE Post (
@@ -17,13 +17,14 @@ CREATE OR REPLACE TABLE Post (
   likes BIGINT,
   userid BIGINT,
   PRIMARY KEY (postid),
-  FOREIGN KEY (userid) REFERENCES (user.userid)
+  FOREIGN KEY (userid) REFERENCES user(userid)
 )Engine=InnoDb;
 
 CREATE OR REPLACE TABLE Session (
-  sessionid BIGINT NOT NULL AUTO_INCRMENT,
+  sessionid BIGINT NOT NULL AUTO_INCREMENT,
+  `key` TEXT,
   expires DATETIME,
   userid BIGINT,
   PRIMARY KEY (sessionid),
-  FOREIGN KEY (userid) REFERENCES (user.userid)
-)Engine=InnnoDb;
+  FOREIGN KEY (userid) REFERENCES user(userid)
+)Engine=INNODB

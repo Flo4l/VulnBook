@@ -4,14 +4,23 @@
 <body class="login">
 
     <div>
-        <form th:action="@{/register}" method="post">
+        <form th:action="@{/register}" th:object="${user}" method="post">
             <h2 class="sr-only">Register Form</h2>
             <div class="illustration"><i class="fas fa-lock"></i></div>
-            <div class="form-group"><input class="form-control" type="email" name="username" th:placeholder="#{form.username}" /></div>
+            <div class="form-group"><input class="form-control" type="text" name="username" th:placeholder="#{form.username}" /></div>
             <div class="form-group"><input class="form-control" type="email" name="email" th:placeholder="#{form.email}" /></div>
             <div class="form-group"><input class="form-control" type="password" name="password" th:placeholder="#{form.password}" /></div>
-            <div class="form-group"><input class="form-control" type="password" name="password2" th:placeholder="#{form.password}"  /></div>
+            <div class="form-group"><input class="form-control" type="password" name="pass" th:placeholder="#{form.password}"  /></div>
+            <div th:if="${fieldEmpty}" class="error-text" th:text="#{error.fieldEmpty}"></div>
+            <div th:if="${unequalPasswords}" class="error-text" th:text="#{error.unequalPasswords}"></div>
+            <div th:if="${alradyRegistered}" class="error-text" th:text="#{error.alreadyRegistered}"></div>
+            <div th:if="${sqlError}" class="error-text" th:text="#{error.sql}"></div>
+            <div th:if="${success}" class="success-text" th:text="#{register.success}"></div>
             <div class="form-group"><button class="btn btn-primary btn-block" type="submit" th:text="#{form.register}"></button></div>
+            <div style="text-align: center">
+                <span th:text="#{register.alreadyRegistered}"></span>
+                <a th:href="@{/login}" th:text="#{form.login}"></a>
+            </div>
         </form>
     </div>
 
