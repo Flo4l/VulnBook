@@ -18,9 +18,7 @@
         </div>
 
         <div class="posts" data-last="1">
-            <div class="post" th:insert="/fragments/post.html :: post"></div>
-            <div class="post" th:insert="/fragments/post.html :: post"></div>
-            <div class="post" th:insert="/fragments/post.html :: post"></div>
+            <div class="post" th:each="post : ${posts}" th:insert="/fragments/post.html :: post"></div>
         </div>
 
         <div class="container">

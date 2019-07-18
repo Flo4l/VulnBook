@@ -23,16 +23,16 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="post-name col-10">Peter Schmidt</div>
-                <div class="post-date col-2">02.06.2019 14:12</div>
+                <div class="post-name col-10" th:text="${@loginUserService.getUserById(post.userId).getUsername()}">Peter Schmidt</div>
+                <div class="post-date col-2" th:content="${post.getTimeText()}">02.06.2019 14:12</div>
             </div>
-            <div class="card-text">Heute ist das Wetter sehr gut!<br/>Ich denke es wäre spaßig schwimmen zu gehen.<br/><br/>Mag
+            <div class="card-text" th:text="${post.text}">Heute ist das Wetter sehr gut!<br/>Ich denke es wäre spaßig schwimmen zu gehen.<br/><br/>Mag
                 jemand zusammen ins Freibad gehen?</div>
             <div class="row">
                 <button class="btn btn-primary border rounded col-1 offset-10" type="button">
                     <span class="far fa-thumbs-up"></span>
                 </button>
-                <div class="likecounter col-1">+0</div>
+                <div class="likecounter col-1" th:text="'+' + ${post.likes}">+0</div>
             </div>
         </div>
     </div>

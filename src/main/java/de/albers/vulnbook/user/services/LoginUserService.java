@@ -68,6 +68,10 @@ public class LoginUserService {
         return null;
     }
 
+    public User getUserById(long userId) throws SQLException {
+        return userRepository.getUserById(userId);
+    }
+
     private Cookie bakeSessionCookie(User user) throws NoSuchAlgorithmException, SQLException {
         Session session = sessionService.createSession(user);
         Cookie cookie = new Cookie("session", session.getKey());

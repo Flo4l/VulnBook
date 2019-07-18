@@ -1,6 +1,7 @@
 package de.albers.vulnbook.post;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Post {
 
@@ -8,21 +9,21 @@ public class Post {
     private LocalDateTime time;
     private String text;
     private long likes;
-    private long userid;
+    private long userId;
 
-    public Post(long postId, LocalDateTime time, String text, long likes, long userid) {
+    public Post(long postId, LocalDateTime time, String text, long likes, long userId) {
         this.postId = postId;
         this.time = time;
         this.text = text;
         this.likes = likes;
-        this.userid = userid;
+        this.userId = userId;
     }
 
-    public Post(LocalDateTime time, String text, long likes, long userid) {
+    public Post(LocalDateTime time, String text, long likes, long userId) {
         this.time = time;
         this.text = text;
         this.likes = likes;
-        this.userid = userid;
+        this.userId = userId;
     }
 
     public long getPostId() {
@@ -57,12 +58,16 @@ public class Post {
         this.likes = likes;
     }
 
-    public long getUserid() {
-        return userid;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getTimeText() {
+        return time.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
     }
 
     @Override
@@ -72,7 +77,7 @@ public class Post {
                 ", time=" + time +
                 ", text='" + text + '\'' +
                 ", likes=" + likes +
-                ", userid=" + userid +
+                ", userId=" + userId +
                 '}';
     }
 }

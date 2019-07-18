@@ -3,11 +3,11 @@ CREATE DATABASE VulnBook;
 USE VulnBook;
 
 CREATE OR REPLACE TABLE User (
-  userid BIGINT NOT NULL AUTO_INCREMENT,
+  userId BIGINT NOT NULL AUTO_INCREMENT,
   username TEXT,
   password TEXT,
   email TEXT,
-  PRIMARY KEY(userid)
+  PRIMARY KEY(userId)
 )Engine=InnoDb;
 
 CREATE OR REPLACE TABLE Post (
@@ -15,16 +15,16 @@ CREATE OR REPLACE TABLE Post (
   `time` TIMESTAMP,
   text TEXT,
   likes BIGINT,
-  userid BIGINT,
+  userId BIGINT,
   PRIMARY KEY (postid),
-  FOREIGN KEY (userid) REFERENCES user(userid)
+  FOREIGN KEY (userId) REFERENCES user(userId)
 )Engine=InnoDb;
 
 CREATE OR REPLACE TABLE Session (
   sessionid BIGINT NOT NULL AUTO_INCREMENT,
   `key` TEXT,
   expires TIMESTAMP,
-  userid BIGINT,
+  userId BIGINT,
   PRIMARY KEY (sessionid),
-  FOREIGN KEY (userid) REFERENCES user(userid)
+  FOREIGN KEY (userId) REFERENCES user(userId)
 )Engine=INNODB

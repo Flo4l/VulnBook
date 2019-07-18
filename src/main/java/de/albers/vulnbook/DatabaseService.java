@@ -25,7 +25,6 @@ public class DatabaseService {
             dataSource.setJdbcUrl(properties.getProperty("spring.datasource.url"));
             dataSource.setUsername(properties.getProperty("spring.datasource.username"));
             dataSource.setPassword(properties.getProperty("spring.datasource.password"));
-
             dataSource.setMinimumIdle(3);
             dataSource.setMaximumPoolSize(10);
             dataSource.setAutoCommit(true);
