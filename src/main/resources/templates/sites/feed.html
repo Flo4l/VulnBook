@@ -9,9 +9,9 @@
         <div class="post-form container">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form th:action="@{/feed}" method="post">
                         <textarea class="post-input" name="text" th:placeholder="#{feed.something}" style="width: 100%;"></textarea>
-                        <button class="btn btn-primary border rounded float-right" type="button" th:text="#{feed.post}"></button>
+                        <button class="btn btn-primary border rounded float-right" type="submit" th:text="#{feed.post}"></button>
                     </form>
                 </div>
             </div>

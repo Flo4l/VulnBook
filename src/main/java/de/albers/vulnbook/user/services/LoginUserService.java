@@ -35,22 +35,16 @@ public class LoginUserService {
     }
 
     public void logoutUser(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        String key = sessionService.getSessionKey(request);
-        if(key != null) {
-            Session session = sessionService.getSessionByKey(key);
-            if(session != null) {
-                sessionService.deleteSession(session);
-                response.addCookie(endSessionCookie());
-            }
+        Session session = sessionService.getSessionByRequest(request);
+        if (session != null) {
+            sessionService.deleteSession(session);
+            response.addCookie(endSessionCookie());
         }
     }
 
     public boolean checkLoggedIn(HttpServletRequest request) throws SQLException, IOException {
         String key = sessionService.getSessionKey(request);
-        if (key == null || !sessionService.validateSession(key)) {
-            return false;
-        }
-        return true;
+        return sessionService.validateSession(key);
     }
 
     public void checkFieldEmpty(User user) throws FieldEmptyException {
@@ -64,6 +58,14 @@ public class LoginUserService {
         if (queriedUser == null || !user.getPassword().equals(queriedUser.getPassword())) {
             throw new IncorrectLoginException();
         }
+    }
+
+    public User getLoggedInUser(HttpServletRequest request) throws SQLException {
+        Session session = sessionService.getSessionByRequest(request);
+        if (session != null) {
+            return userRepository.getUserById(session.getUserId());
+        }
+        return null;
     }
 
     private Cookie bakeSessionCookie(User user) throws NoSuchAlgorithmException, SQLException {

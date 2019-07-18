@@ -10,31 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class StdController {
+public class HomeController {
 
     private LoginUserService loginUserService;
 
     @Autowired
-    public StdController(LoginUserService loginUserService) {
+    public HomeController(LoginUserService loginUserService) {
         this.loginUserService = loginUserService;
     }
 
-    @GetMapping("/feed")
-    public String feedPage(Model model, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            if(loginUserService.checkLoggedIn(request)) {
-                model.addAttribute("loggedIn", true);
-            } else {
-                response.sendRedirect("/login");
-            }
-            return "sites/feed.html";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
-    }
-
-    @GetMapping({"/home", "/"})
+    @GetMapping({"/", "/home"})
     public String homePage(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
             if(loginUserService.checkLoggedIn(request)) {
@@ -45,5 +30,4 @@ public class StdController {
         }
         return "sites/home.html";
     }
-
 }

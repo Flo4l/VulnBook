@@ -23,7 +23,7 @@ public class SessionService {
         String key = generateSessionKey(user.getUsername());
         LocalDateTime expires = LocalDateTime.now().plusSeconds(Session.MAX_AGE);
         Session session = new Session(key, expires, user.getUserId());
-        sessionRepository.createSesion(session);
+        sessionRepository.createSession(session);
         return session;
     }
 
@@ -52,6 +52,11 @@ public class SessionService {
 
     public boolean checkUserHasSession(User user) throws SQLException {
         return sessionRepository.checkUserHasSession(user);
+    }
+
+    public Session getSessionByRequest(HttpServletRequest request) throws SQLException {
+        String key = getSessionKey(request);
+        return getSessionByKey(key);
     }
 
     public Session getSessionByKey(String key) throws SQLException {

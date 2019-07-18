@@ -6,7 +6,7 @@ public class Session {
 
     public static final int MAX_AGE = 60 * 60 * 24 * 7;
 
-    private long id;
+    private long sessionId;
     private String key;
     private LocalDateTime expires;
     private long userId;
@@ -17,17 +17,17 @@ public class Session {
         this.userId = userId;
     }
 
-    public Session(long id, String key, LocalDateTime expires, long userId) {
+    public Session(long sessionId, String key, LocalDateTime expires, long userId) {
         this(key, expires, userId);
-        this.id = id;
+        this.sessionId = sessionId;
     }
 
-    public long getId() {
-        return id;
+    public long getSessionId() {
+        return sessionId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setSessionId(long sessionId) {
+        this.sessionId = sessionId;
     }
 
     public String getKey() {
@@ -57,7 +57,7 @@ public class Session {
     @Override
     public String toString() {
         return "Session{" +
-                "id=" + id +
+                "sessionId=" + sessionId +
                 ", key='" + key + '\'' +
                 ", expires=" + expires +
                 ", userId=" + userId +

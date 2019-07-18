@@ -69,7 +69,7 @@ public class UserRepository {
     public User getUserBySession(Session session) throws SQLException {
         Connection con = DatabaseService.getDataSource().getConnection();
         Statement stmt = con.createStatement();
-        String sql = "SELECT * FROM user NATURAL JOIN session WHERE sessionid = " + session.getId();
+        String sql = "SELECT * FROM user NATURAL JOIN session WHERE sessionid = " + session.getSessionId();
         ResultSet rs = stmt.executeQuery(sql);
         if(rs.next()) {
             return getUser(rs);

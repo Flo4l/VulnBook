@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Repository
 public class SessionRepository {
 
-    public void createSesion(Session session) throws SQLException {
+    public void createSession(Session session) throws SQLException {
         Connection con = DatabaseService.getDataSource().getConnection();
         Statement stmt = con.createStatement();
         String sql = "INSERT INTO session (`key`, expires, userid) VALUES ('" + session.getKey() + "', '" + session.getExpires() + "', " + session.getUserId() + ")";
