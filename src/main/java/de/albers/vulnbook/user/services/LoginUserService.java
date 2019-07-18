@@ -34,11 +34,23 @@ public class LoginUserService {
         response.sendRedirect("/feed");
     }
 
-    public void checkLoggedIn(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String key = getSessionKey(request);
-        if (key == null || !sessionService.validateSession(key)) {
-            response.sendRedirect("/login");
+    public void logoutUser(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        String key = sessionService.getSessionKey(request);
+        if(key != null) {
+            Session session = sessionService.getSessionByKey(key);
+            if(session != null) {
+                sessionService.deleteSession(session);
+                response.addCookie(endSessionCookie());
+            }
         }
+    }
+
+    public boolean checkLoggedIn(HttpServletRequest request) throws SQLException, IOException {
+        String key = sessionService.getSessionKey(request);
+        if (key == null || !sessionService.validateSession(key)) {
+            return false;
+        }
+        return true;
     }
 
     public void checkFieldEmpty(User user) throws FieldEmptyException {
@@ -62,15 +74,9 @@ public class LoginUserService {
         return cookie;
     }
 
-    private String getSessionKey(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("session")) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
+    private Cookie endSessionCookie() {
+        Cookie cookie = new Cookie("session", "");
+        cookie.setMaxAge(0);
+        return cookie;
     }
 }

@@ -28,13 +28,36 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model, HttpServletRequest request) {
-        System.out.println(request.getRequestedSessionId());
+    public String getLoginPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if(loginUserService.checkLoggedIn(request)) {
+                response.sendRedirect("/feed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "sites/login.html";
     }
 
+    @GetMapping("/logout")
+    public void logUserOut(Model model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            loginUserService.logoutUser(request, response);
+            response.sendRedirect("/home");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @GetMapping("/register")
-    public String getRegisterPage(Model model) {
+    public String getRegisterPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if(loginUserService.checkLoggedIn(request)) {
+                response.sendRedirect("/feed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "sites/register.html";
     }
 

@@ -3,6 +3,8 @@ package de.albers.vulnbook.session;
 import de.albers.vulnbook.user.User;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -32,8 +34,28 @@ public class SessionService {
         return false;
     }
 
-    public void deleteSession(String key) {
+    public void deleteSession(Session session) throws SQLException {
+        sessionRepository.deleteSession(session);
+    }
 
+    public String getSessionKey(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("session")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean checkUserHasSession(User user) throws SQLException {
+        return sessionRepository.checkUserHasSession(user);
+    }
+
+    public Session getSessionByKey(String key) throws SQLException {
+        return sessionRepository.getSessionByKey(key);
     }
 
     private String generateSessionKey(String input) throws NoSuchAlgorithmException {

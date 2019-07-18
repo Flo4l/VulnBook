@@ -37,7 +37,7 @@ public class RegisterUserService {
     }
 
     public void checkAlreadyRegistered(User user) throws SQLException {
-        if(userRepository.getUserByUsername(user.getUsername()) != null) {
+        if(userRepository.getUserByUsername(user.getUsername()) != null || userRepository.getUserByMail(user.getEmail()) != null) {
             throw new AlreadyRegisteredException("User already registered: " + user.getUsername());
         }
     }

@@ -1,6 +1,7 @@
 package de.albers.vulnbook.user;
 
 import de.albers.vulnbook.DatabaseService;
+import de.albers.vulnbook.session.Session;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -52,6 +53,28 @@ public class UserRepository {
             users.add(getUser(rs));
         }
         return users;
+    }
+
+    public User getUserByMail(String mail) throws SQLException {
+        Connection con = DatabaseService.getDataSource().getConnection();
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM user WHERE email = '" + mail + "'";
+        ResultSet rs = stmt.executeQuery(sql);
+        if(rs.next()) {
+            return getUser(rs);
+        }
+        return null;
+    }
+
+    public User getUserBySession(Session session) throws SQLException {
+        Connection con = DatabaseService.getDataSource().getConnection();
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM user NATURAL JOIN session WHERE sessionid = " + session.getId();
+        ResultSet rs = stmt.executeQuery(sql);
+        if(rs.next()) {
+            return getUser(rs);
+        }
+        return null;
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {

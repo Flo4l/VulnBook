@@ -20,8 +20,13 @@
                 </li>
             </ul>
             <span class="navbar-text actions">
-                    <a class="btn btn-primary action-button" role="button" th:href="@{/login}">Einloggen</a>
-                    <a class="btn btn-primary action-button" role="button" th:href="@{/register}">Registrieren</a>
+                <div th:if="${loggedIn}">
+                    <a class="btn btn-primary action-button" role="button" th:href="@{/logout}" th:text="#{form.logout}"></a>
+                </div>
+                <div th:if="${loggedIn == null}">
+                    <a class="btn btn-primary action-button" role="button" th:href="@{/login}" th:text="#{form.login}"></a>
+                    <a class="btn btn-primary action-button" role="button" th:href="@{/register}" th:text="#{form.register}"></a>
+                </div>
             </span>
         </div>
     </nav>

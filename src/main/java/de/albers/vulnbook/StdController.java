@@ -22,7 +22,11 @@ public class StdController {
     @GetMapping("/feed")
     public String feedPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
-            loginUserService.checkLoggedIn(request, response);
+            if(loginUserService.checkLoggedIn(request)) {
+                model.addAttribute("loggedIn", true);
+            } else {
+                response.sendRedirect("/login");
+            }
             return "sites/feed.html";
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,7 +35,14 @@ public class StdController {
     }
 
     @GetMapping({"/home", "/"})
-    public String homePage(Model model) {
+    public String homePage(Model model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if(loginUserService.checkLoggedIn(request)) {
+                response.sendRedirect("/feed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "sites/home.html";
     }
 

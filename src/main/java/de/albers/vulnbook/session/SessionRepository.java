@@ -1,6 +1,7 @@
 package de.albers.vulnbook.session;
 
 import de.albers.vulnbook.DatabaseService;
+import de.albers.vulnbook.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -25,6 +26,24 @@ public class SessionRepository {
             return getSession(rs);
         }
         return null;
+    }
+
+    public void deleteSession(Session session) throws SQLException {
+        Connection con = DatabaseService.getDataSource().getConnection();
+        Statement stmt = con.createStatement();
+        String sql = "DELETE FROM session WHERE `key` = '" + session.getKey() + "'";
+        stmt.execute(sql);
+    }
+
+    public boolean checkUserHasSession(User user) throws SQLException {
+        Connection con = DatabaseService.getDataSource().getConnection();
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM session WHERE userid = " + user.getUserId();
+        ResultSet rs = stmt.executeQuery(sql);
+        if(rs.next()) {
+            return true;
+        }
+        return false;
     }
 
     private Session getSession(ResultSet resultSet) throws SQLException {
