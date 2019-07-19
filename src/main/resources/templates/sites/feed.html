@@ -11,14 +11,16 @@
                 <div class="card-body">
                     <form th:action="@{/feed}" method="post">
                         <textarea class="post-input" name="text" th:placeholder="#{feed.something}" style="width: 100%;"></textarea>
+                        <div class="error-text" th:if="${postEmpty}" th:text="#{error.postEmpty}"></div>
+                        <div class="error-text" th:if="${internalError}" th:text="#{error.internal}"></div>
                         <button class="btn btn-primary border rounded float-right" type="submit" th:text="#{feed.post}"></button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="posts" data-last="1">
-            <div class="post" th:each="post : ${posts}" th:insert="/fragments/post.html :: post"></div>
+        <div class="posts" th:data-last="${latestPostId}">
+            <div class="post" th:each="post : ${posts}" th:insert="/fragments/post.html :: post" th:id="${post.postId}"></div>
         </div>
 
         <div class="container">
@@ -29,6 +31,8 @@
     </div>
     
     <div th:replace="/fragments/footer.html :: footer"></div>
+
+    <script th:src="@{/js/feed.js}"></script>
 
 </body>
 </html>

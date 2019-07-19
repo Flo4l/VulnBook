@@ -27,4 +27,12 @@ CREATE OR REPLACE TABLE Session (
   userId BIGINT,
   PRIMARY KEY (sessionid),
   FOREIGN KEY (userId) REFERENCES user(userId)
-)Engine=INNODB
+)Engine=INNODB;
+
+CREATE OR REPLACE TABLE User_Likes_Post(
+  userid BIGINT NOT NULL,
+  postid BIGINT NOT NULL,
+  FOREIGN KEY (userid) REFERENCES user(userid),
+  FOREIGN KEY (postid) REFERENCES post(postid),
+  PRIMARY KEY (userid, postid)
+)Engine=InnoDb;

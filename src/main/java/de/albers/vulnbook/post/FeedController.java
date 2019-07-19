@@ -1,18 +1,22 @@
 package de.albers.vulnbook.post;
 
+import de.albers.vulnbook.post.exceptions.AlreadyLikedException;
 import de.albers.vulnbook.post.exceptions.PostEmptyException;
 import de.albers.vulnbook.post.services.RetrievePostService;
 import de.albers.vulnbook.post.services.SubmitPostService;
+import de.albers.vulnbook.user.exceptions.AlreadyRegisteredException;
 import de.albers.vulnbook.user.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -30,16 +34,14 @@ public class FeedController {
     }
 
     @GetMapping(value = "/feed")
-    public String feedPage(@RequestParam(value = "numPosts", required=false, defaultValue = "20") int numPosts, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String feedPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
             if(loginUserService.checkLoggedIn(request)) {
                 model.addAttribute("loggedIn", true);
             } else {
                 response.sendRedirect("/login");
             }
-            long lastestPostId = retrievePostService.getLatestPostId();
-            List<Post> posts = retrievePostService.getNumPosts(lastestPostId, numPosts);
-            model.addAttribute("posts", posts);
+            addLatestPosts(model);
             return "sites/feed.html";
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,11 +61,39 @@ public class FeedController {
             submitPostService.checkPostEmpty(text);
             Post post = submitPostService.createPost(text, request);
             submitPostService.submitPost(post);
+            addLatestPosts(model);
         } catch (PostEmptyException e) {
             model.addAttribute("postEmpty", true);
         } catch (Exception e) {
             model.addAttribute("internalError", true);
         }
         return "sites/feed.html";
+    }
+
+    @PostMapping("/post/like/{id}")
+    public void likePost(@PathVariable long id, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if(loginUserService.checkLoggedIn(request)) {
+                submitPostService.likePost(id, request);
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            }
+        } catch (AlreadyLikedException e) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addLatestPosts(Model model) throws SQLException {
+        long lastestPostId = retrievePostService.getLatestPostId();
+        List<Post> posts = retrievePostService.getNumPosts(lastestPostId, 20);
+        long oldestPostId = 0;
+        if(posts.size() > 0) {
+            oldestPostId = posts.get(posts.size()-1).getPostId();
+        }
+        model.addAttribute("latestPostId", oldestPostId);
+        model.addAttribute("posts", posts);
     }
 }

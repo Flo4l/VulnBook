@@ -2,8 +2,10 @@ package de.albers.vulnbook.post.services;
 
 import de.albers.vulnbook.post.Post;
 import de.albers.vulnbook.post.PostRepository;
+import de.albers.vulnbook.post.exceptions.AlreadyLikedException;
 import de.albers.vulnbook.post.exceptions.PostEmptyException;
 import de.albers.vulnbook.session.SessionService;
+import de.albers.vulnbook.user.User;
 import de.albers.vulnbook.user.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,16 @@ public class SubmitPostService {
 
     public void submitPost(Post post) throws SQLException {
         postRepository.savePost(post);
+    }
+
+    public void likePost(long postId, HttpServletRequest request) throws SQLException {
+        User user = loginUserService.getLoggedInUser(request);
+        Post post = postRepository.getPostById(postId);
+        if(postRepository.checkUserLikedPost(user, post)) {
+            throw new AlreadyLikedException(user.getUsername() + " already likes post nr. " + postId);
+        }
+        post.setLikes(post.getLikes() + 1);
+        postRepository.saveLike(user, post);
+        postRepository.updateLikes(post);
     }
 }
