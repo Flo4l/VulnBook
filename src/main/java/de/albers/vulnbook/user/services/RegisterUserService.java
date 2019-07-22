@@ -6,6 +6,7 @@ import de.albers.vulnbook.user.exceptions.AlreadyRegisteredException;
 import de.albers.vulnbook.user.exceptions.FieldEmptyException;
 import de.albers.vulnbook.user.exceptions.UnequalPasswordsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -21,6 +22,7 @@ public class RegisterUserService {
     }
 
     public void registerUser(User user) throws SQLException {
+        user.setPassword(encodePassword(user.getPassword()));
         userRepository.createUser(user);
     }
 
@@ -40,5 +42,9 @@ public class RegisterUserService {
         if(userRepository.getUserByUsername(user.getUsername()) != null || userRepository.getUserByMail(user.getEmail()) != null) {
             throw new AlreadyRegisteredException("User already registered: " + user.getUsername());
         }
+    }
+
+    private String encodePassword(String password) {
+        return new BCryptPasswordEncoder().encode(password);
     }
 }

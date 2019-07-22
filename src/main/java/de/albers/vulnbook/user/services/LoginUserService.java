@@ -7,6 +7,7 @@ import de.albers.vulnbook.user.UserRepository;
 import de.albers.vulnbook.user.exceptions.FieldEmptyException;
 import de.albers.vulnbook.user.exceptions.IncorrectLoginException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -55,7 +56,7 @@ public class LoginUserService {
 
     public void checkCorrectLogin(User user) throws IncorrectLoginException, SQLException {
         User queriedUser = userRepository.getUserByUsername(user.getUsername());
-        if (queriedUser == null || !user.getPassword().equals(queriedUser.getPassword())) {
+        if (queriedUser == null || !new BCryptPasswordEncoder().matches(user.getPassword(), queriedUser.getPassword())) {
             throw new IncorrectLoginException();
         }
     }

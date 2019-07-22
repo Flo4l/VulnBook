@@ -1,13 +1,13 @@
 package de.albers.vulnbook.session;
 
 import de.albers.vulnbook.user.User;
-import org.bouncycastle.crypto.generators.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Random;
