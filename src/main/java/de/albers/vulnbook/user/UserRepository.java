@@ -4,10 +4,7 @@ import de.albers.vulnbook.DatabaseService;
 import de.albers.vulnbook.session.Session;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +12,20 @@ import java.util.List;
 public class UserRepository {
 
     public void createUser(User user) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "INSERT INTO User (username, password, email) VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', '" + user.getEmail() + "')";
-            stmt.execute(sql);
+        String sql = "INSERT INTO User (username, password, email) VALUES (?,?,?)";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getEmail());
+            stmt.execute();
         }
     }
 
     public User getUserByUsername(String username) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "SELECT * FROM USER WHERE username = '" + username + "'";
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = "SELECT * FROM USER WHERE username = ?";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return getUser(rs);
             }
@@ -56,9 +57,10 @@ public class UserRepository {
     }
 
     public User getUserByMail(String mail) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "SELECT * FROM user WHERE email = '" + mail + "'";
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = "SELECT * FROM user WHERE email = ?";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, mail);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return getUser(rs);
             }

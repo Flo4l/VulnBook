@@ -4,18 +4,18 @@ import de.albers.vulnbook.DatabaseService;
 import de.albers.vulnbook.user.User;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 @Repository
 public class SessionRepository {
 
     public void createSession(Session session) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "INSERT INTO session (`key`, expires, userid) VALUES ('" + session.getKey() + "', '" + session.getExpires() + "', " + session.getUserId() + ")";
+        String sql = "INSERT INTO session (`key`, expires, userid) VALUES (?,?,?)";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, session.getKey());
+            stmt.setTimestamp(2, Timestamp.valueOf(session.getExpires()));
+            stmt.setLong(1, session.getUserId());
             stmt.execute(sql);
         }
     }
@@ -35,9 +35,10 @@ public class SessionRepository {
     }
 
     public Session getSessionByKey(String key) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "SELECT * FROM session WHERE `key` = '" + key + "'";
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = "SELECT * FROM session WHERE `key` = ?";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, key);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return getSession(rs);
             }
@@ -46,8 +47,9 @@ public class SessionRepository {
     }
 
     public void deleteSession(Session session) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "DELETE FROM session WHERE `key` = '" + session.getKey() + "'";
+        String sql = "DELETE FROM session WHERE `key` = ?";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, session.getKey());
             stmt.execute(sql);
         }
     }

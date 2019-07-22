@@ -4,10 +4,7 @@ import de.albers.vulnbook.DatabaseService;
 import de.albers.vulnbook.user.User;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +13,12 @@ import java.util.List;
 public class PostRepository {
 
     public void savePost(Post post) throws SQLException {
-        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
-            String sql = "INSERT INTO post (time, text, likes, userid) VALUES ('" + post.getTime() + "', '" + post.getText() + "', " + post.getLikes() + ", " + post.getUserId() + ")";
+        String sql = "INSERT INTO post (time, text, likes, userid) VALUES (?,?,?,?)";
+        try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(post.getTime()));
+            stmt.setString(2, post.getText());
+            stmt.setLong(3, post.getLikes());
+            stmt.setLong(4, post.getUserId());
             stmt.execute(sql);
         }
     }
