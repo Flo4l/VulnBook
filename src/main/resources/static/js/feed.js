@@ -13,7 +13,7 @@ function loadMore() {
             if(status === "success") {
                 var posts = JSON.parse(data);
                 posts.forEach(function(post) {
-                    insertPost(post.postid, post.username, post.text, post.time, post.likes);
+                    insertPost(post.postid, escapeRegExp(post.username), escapeRegExp(post.text), post.time, post.likes);
                 });
 
                 var lastId = parseInt(posts[posts.length - 1].postid);
@@ -24,6 +24,10 @@ function loadMore() {
                 }
             }
         });
+}
+
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}<>()|[\]\\]/g, '\\$&');
 }
 
 function insertPost(id, username, text, time, likes) {
@@ -59,20 +63,4 @@ function likePost(postId) {
                 counter.html("+" + likes);
             }
         });
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1)
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
 }
