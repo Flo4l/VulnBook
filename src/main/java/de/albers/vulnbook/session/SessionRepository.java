@@ -15,8 +15,8 @@ public class SessionRepository {
         try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, session.getKey());
             stmt.setTimestamp(2, Timestamp.valueOf(session.getExpires()));
-            stmt.setLong(1, session.getUserId());
-            stmt.execute(sql);
+            stmt.setLong(3, session.getUserId());
+            stmt.execute();
         }
     }
 
@@ -50,7 +50,7 @@ public class SessionRepository {
         String sql = "DELETE FROM session WHERE `key` = ?";
         try (Connection con = DatabaseService.getDataSource().getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, session.getKey());
-            stmt.execute(sql);
+            stmt.execute();
         }
     }
 

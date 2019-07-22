@@ -19,7 +19,7 @@ public class PostRepository {
             stmt.setString(2, post.getText());
             stmt.setLong(3, post.getLikes());
             stmt.setLong(4, post.getUserId());
-            stmt.execute(sql);
+            stmt.execute();
         }
     }
 
