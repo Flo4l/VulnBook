@@ -4,7 +4,10 @@ import de.albers.vulnbook.DatabaseService;
 import de.albers.vulnbook.user.User;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 
 @Repository

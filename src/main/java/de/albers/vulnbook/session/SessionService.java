@@ -28,10 +28,7 @@ public class SessionService {
     }
 
     public boolean validateSession(String key) throws SQLException {
-        if(sessionRepository.getSessionByKey(key) != null) {
-            return true;
-        }
-        return false;
+        return sessionRepository.getSessionByKey(key) != null;
     }
 
     public void deleteSession(Session session) throws SQLException {

@@ -4,7 +4,6 @@ import de.albers.vulnbook.post.Post;
 import de.albers.vulnbook.post.PostRepository;
 import de.albers.vulnbook.post.exceptions.AlreadyLikedException;
 import de.albers.vulnbook.post.exceptions.PostEmptyException;
-import de.albers.vulnbook.session.SessionService;
 import de.albers.vulnbook.user.User;
 import de.albers.vulnbook.user.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,11 @@ import java.time.LocalDateTime;
 public class SubmitPostService {
 
     private PostRepository postRepository;
-    private SessionService sessionService;
     private LoginUserService loginUserService;
 
     @Autowired
-    public SubmitPostService(PostRepository postRepository, SessionService sessionService, LoginUserService loginUserService) {
+    public SubmitPostService(PostRepository postRepository, LoginUserService loginUserService) {
         this.postRepository = postRepository;
-        this.sessionService = sessionService;
         this.loginUserService = loginUserService;
     }
 

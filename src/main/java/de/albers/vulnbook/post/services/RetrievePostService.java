@@ -39,7 +39,7 @@ public class RetrievePostService {
     public String getNumPostsAsJson(long idFirst, int numPosts) throws SQLException {
         List<Post> posts = getNumPosts(idFirst, numPosts);
         JSONArray jsonPosts = new JSONArray();
-        posts.stream().forEach(p -> {
+        posts.forEach(p -> {
             try {
                 User user = loginUserService.getUserById(p.getUserId());
                 JSONObject jsonPost = new JSONObject(p.toMap());

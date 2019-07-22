@@ -57,11 +57,17 @@ public class FeedController {
             submitPostService.checkPostEmpty(text);
             Post post = submitPostService.createPost(text, request);
             submitPostService.submitPost(post);
-            addLatestPosts(model);
         } catch (PostEmptyException e) {
             model.addAttribute("postEmpty", true);
         } catch (Exception e) {
             model.addAttribute("internalError", true);
+            e.printStackTrace();
+        }
+        try{
+            addLatestPosts(model);
+        } catch (Exception e) {
+            model.addAttribute("internalError", true);
+            e.printStackTrace();
         }
         return "/sites/feed.html";
     }
