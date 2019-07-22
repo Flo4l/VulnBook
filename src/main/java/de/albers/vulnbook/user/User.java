@@ -57,15 +57,6 @@ public class User {
         this.email = email;
     }
 
-    public Map<String, String> toMap() {
-        Map<String, String> map = new HashMap<>();
-        map.put("userid", String.valueOf(userId));
-        map.put("username", username);
-        map.put("password", password);
-        map.put("email", email);
-        return map;
-    }
-
     @Override
     public String toString() {
         return "User{" +

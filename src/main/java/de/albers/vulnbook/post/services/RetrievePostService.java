@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RetrievePostService {
@@ -42,12 +44,14 @@ public class RetrievePostService {
         posts.forEach(p -> {
             try {
                 User user = loginUserService.getUserById(p.getUserId());
-                JSONObject jsonPost = new JSONObject(p.toMap());
-                JSONObject jsonUser = new JSONObject(user.toMap());
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.put(jsonPost);
-                jsonArray.put(jsonUser);
-                jsonPosts.put(jsonArray);
+                Map<String, String> map = new HashMap<>();
+                map.put("postid", String.valueOf(p.getPostId()));
+                map.put("time", p.getTimeText());
+                map.put("text", p.getText());
+                map.put("likes", String.valueOf(p.getLikes()));
+                map.put("username", user.getUsername());
+                JSONObject jsonPost = new JSONObject(map);
+                jsonPosts.put(jsonPost);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

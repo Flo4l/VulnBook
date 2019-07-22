@@ -13,10 +13,10 @@ function loadMore() {
             if(status === "success") {
                 var posts = JSON.parse(data);
                 posts.forEach(function(post) {
-                    insertPost(post[0].postid, post[1].username, post[0].text, post[0].time, post[0].likes);
+                    insertPost(post.postid, post.username, post.text, post.time, post.likes);
                 });
 
-                var lastId = parseInt(posts[posts.length - 1][0].postid);
+                var lastId = parseInt(posts[posts.length - 1].postid);
                 $(".posts").attr("data-last", lastId);
 
                 if(lastId === 1) {

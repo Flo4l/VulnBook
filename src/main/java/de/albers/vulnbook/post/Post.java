@@ -72,16 +72,6 @@ public class Post {
         return time.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
     }
 
-    public Map<String, String> toMap() {
-        Map<String, String> map = new HashMap<>();
-        map.put("postid", String.valueOf(postId));
-        map.put("time", getTimeText());
-        map.put("text", getText());
-        map.put("likes", String.valueOf(likes));
-        map.put("userid", String.valueOf(userId));
-        return map;
-    }
-
     @Override
     public String toString() {
         return "Post{" +
