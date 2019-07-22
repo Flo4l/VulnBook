@@ -24,7 +24,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="post-name col-10" th:text="${@loginUserService.getUserById(post.userId).getUsername()}"></div>
-                <div class="post-date col-2" th:content="${post.getTimeText()}"></div>
+                <div class="post-date col-2" th:text="${post.getTimeText()}"></div>
             </div>
             <div class="card-text" th:text="${post.text}"></div>
             <div class="row">

@@ -4,15 +4,11 @@ import de.albers.vulnbook.post.exceptions.AlreadyLikedException;
 import de.albers.vulnbook.post.exceptions.PostEmptyException;
 import de.albers.vulnbook.post.services.RetrievePostService;
 import de.albers.vulnbook.post.services.SubmitPostService;
-import de.albers.vulnbook.user.exceptions.AlreadyRegisteredException;
 import de.albers.vulnbook.user.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +63,22 @@ public class FeedController {
         } catch (Exception e) {
             model.addAttribute("internalError", true);
         }
-        return "sites/feed.html";
+        return "/sites/feed.html";
+    }
+
+    @ResponseBody
+    @PostMapping("/posts/retrieve")
+    public String getNumPosts(@RequestParam(name = "idFirst") long idFirst, @RequestParam(name = "numPosts") int numPosts, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if(loginUserService.checkLoggedIn(request)) {
+                return retrievePostService.getNumPostsAsJson(idFirst, numPosts);
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "[]";
     }
 
     @PostMapping("/post/like/{id}")
@@ -96,4 +107,5 @@ public class FeedController {
         model.addAttribute("latestPostId", oldestPostId);
         model.addAttribute("posts", posts);
     }
+
 }

@@ -2,6 +2,8 @@ package de.albers.vulnbook.post;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Post {
 
@@ -11,15 +13,15 @@ public class Post {
     private long likes;
     private long userId;
 
-    public Post(long postId, LocalDateTime time, String text, long likes, long userId) {
-        this.postId = postId;
+    public Post(LocalDateTime time, String text, long likes, long userId) {
         this.time = time;
         this.text = text;
         this.likes = likes;
         this.userId = userId;
     }
 
-    public Post(LocalDateTime time, String text, long likes, long userId) {
+    public Post(long postId, LocalDateTime time, String text, long likes, long userId) {
+        this.postId = postId;
         this.time = time;
         this.text = text;
         this.likes = likes;
@@ -68,6 +70,16 @@ public class Post {
 
     public String getTimeText() {
         return time.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+    }
+
+    public Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("postid", String.valueOf(postId));
+        map.put("time", getTimeText());
+        map.put("text", getText());
+        map.put("likes", String.valueOf(likes));
+        map.put("userid", String.valueOf(userId));
+        return map;
     }
 
     @Override

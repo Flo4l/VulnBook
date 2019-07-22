@@ -42,7 +42,7 @@ public class LoginUserService {
         }
     }
 
-    public boolean checkLoggedIn(HttpServletRequest request) throws SQLException, IOException {
+    public boolean checkLoggedIn(HttpServletRequest request) throws SQLException {
         String key = sessionService.getSessionKey(request);
         return sessionService.validateSession(key);
     }

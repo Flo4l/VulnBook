@@ -4,6 +4,7 @@
 <body>
 
     <div th:replace="/fragments/header.html :: header"></div>
+    <script src="/js/feed.js"></script>
 
     <div class="container feed">
         <div class="post-form container">
@@ -23,16 +24,14 @@
             <div class="post" th:each="post : ${posts}" th:insert="/fragments/post.html :: post" th:id="${post.postId}"></div>
         </div>
 
-        <div class="container">
+        <div class="container btn-more">
             <div class="card">
-                <button class="btn btn-primary border rounded" type="button" th:text="#{feed.more}"></button>
+                <button class="btn btn-primary border rounded" type="button" th:text="#{feed.more}" onclick="loadMore();"></button>
             </div>
         </div>
     </div>
     
     <div th:replace="/fragments/footer.html :: footer"></div>
-
-    <script th:src="@{/js/feed.js}"></script>
 
 </body>
 </html>
