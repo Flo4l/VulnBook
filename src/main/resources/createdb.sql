@@ -36,3 +36,9 @@ CREATE OR REPLACE TABLE User_Likes_Post(
   FOREIGN KEY (postid) REFERENCES post(postid),
   PRIMARY KEY (userid, postid)
 )Engine=InnoDb;
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE DeleteExpired()
+BEGIN
+  DELETE FROM `session` WHERE expires <= CURRENT_TIMESTAMP;
+END; //

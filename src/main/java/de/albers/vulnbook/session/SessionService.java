@@ -20,6 +20,7 @@ public class SessionService {
     }
 
     public Session createSession(User user) throws NoSuchAlgorithmException, SQLException {
+        sessionRepository.deleteSessionsForUser(user);
         String key = generateSessionKey(user.getUsername());
         LocalDateTime expires = LocalDateTime.now().plusSeconds(Session.MAX_AGE);
         Session session = new Session(key, expires, user.getUserId());
@@ -28,6 +29,7 @@ public class SessionService {
     }
 
     public boolean validateSession(String key) throws SQLException {
+        sessionRepository.deleteExpiredSessions();
         return sessionRepository.getSessionByKey(key) != null;
     }
 

@@ -20,6 +20,20 @@ public class SessionRepository {
         }
     }
 
+    public void deleteExpiredSessions() throws SQLException {
+        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
+            String sql = "CALL DeleteExpired();";
+            stmt.execute(sql);
+        }
+    }
+
+    public void deleteSessionsForUser(User user) throws SQLException {
+        try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
+            String sql = "DELETE FROM session WHERE userid = " + user.getUserId();
+            stmt.execute(sql);
+        }
+    }
+
     public Session getSessionByKey(String key) throws SQLException {
         try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
             String sql = "SELECT * FROM session WHERE `key` = '" + key + "'";
