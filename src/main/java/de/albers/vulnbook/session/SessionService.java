@@ -1,6 +1,7 @@
 package de.albers.vulnbook.session;
 
 import de.albers.vulnbook.user.User;
+import org.bouncycastle.crypto.generators.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -9,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 @Service
 public class SessionService {
@@ -21,7 +23,7 @@ public class SessionService {
 
     public Session createSession(User user) throws NoSuchAlgorithmException, SQLException {
         sessionRepository.deleteSessionsForUser(user);
-        String key = generateSessionKey(user.getUsername());
+        String key = generateSessionKey();
         LocalDateTime expires = LocalDateTime.now().plusSeconds(Session.MAX_AGE);
         Session session = new Session(key, expires, user.getUserId());
         sessionRepository.createSession(session);
@@ -62,7 +64,12 @@ public class SessionService {
         return sessionRepository.getSessionByKey(key);
     }
 
-    private String generateSessionKey(String input) throws NoSuchAlgorithmException {
+    private String generateSessionKey() throws NoSuchAlgorithmException {
+        Random random = new Random();
+        String input = "";
+        for(int i = 0; i <= 150; i++) {
+            input += (char)(random.nextInt(92) + '!');
+        }
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.update(input.getBytes());
         byte[] hashbytes = messageDigest.digest();
