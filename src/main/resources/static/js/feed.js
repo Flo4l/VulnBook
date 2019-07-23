@@ -13,7 +13,7 @@ function loadMore() {
             if(status === "success") {
                 var posts = JSON.parse(data);
                 posts.forEach(function(post) {
-                    insertPost(post.postid, escapeRegExp(post.username), escapeRegExp(post.text), post.time, post.likes);
+                    insertPost(post.postid, escape(post.username), escape(post.text), post.time, post.likes);
                 });
 
                 var lastId = parseInt(posts[posts.length - 1].postid);
@@ -26,8 +26,10 @@ function loadMore() {
         });
 }
 
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}<>()|[\]\\]/g, '\\$&');
+function escape(string) {
+    return string.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+        return '&#' + i.charCodeAt(0) + ';';
+    });
 }
 
 function insertPost(id, username, text, time, likes) {
