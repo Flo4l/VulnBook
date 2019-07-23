@@ -37,7 +37,7 @@ function insertPost(id, username, text, time, likes) {
                             "</div>" +
                             "<div class='card-text'>" + text + "</div>" +
                             "<div class='row'>" +
-                                "<button class='btn btn-primary border rounded col-1 offset-10' type='button' onclick='likePost(5)'>" +
+                                "<button class='btn btn-primary border rounded col-1 offset-10' type='button' onclick='likePost(" + id + ")'>" +
                                     "<span class='far fa-thumbs-up'></span>" +
                                 "</button>" +
                             "<div class='likecounter col-1'>+" + likes + "</div>" +
