@@ -107,7 +107,7 @@ public class FeedController {
         long lastestPostId = retrievePostService.getLatestPostId();
         List<Post> posts = retrievePostService.getNumPosts(lastestPostId, 20);
         long oldestPostId = 0;
-        if(posts.size() > 0) {
+        if(!posts.isEmpty()) {
             oldestPostId = posts.get(posts.size()-1).getPostId();
         }
         model.addAttribute("latestPostId", oldestPostId);

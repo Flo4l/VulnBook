@@ -40,10 +40,7 @@ public class PostRepository {
         try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
             String sql = "SELECT * FROM user_likes_post WHERE userid = " + user.getUserId() + " AND postid = " + post.getPostId();
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         }
     }
 
