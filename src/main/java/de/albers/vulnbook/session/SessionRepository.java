@@ -58,10 +58,7 @@ public class SessionRepository {
         try (Connection con = DatabaseService.getDataSource().getConnection(); Statement stmt = con.createStatement()) {
             String sql = "SELECT * FROM session WHERE userid = " + user.getUserId();
             ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         }
     }
 

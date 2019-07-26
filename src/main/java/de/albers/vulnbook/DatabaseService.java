@@ -15,6 +15,8 @@ public class DatabaseService {
     private static Properties properties;
     private static HikariDataSource dataSource;
 
+    private DatabaseService() {}
+
     static {
         try {
             properties = new Properties();

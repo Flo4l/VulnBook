@@ -78,6 +78,7 @@ public class LoginUserService {
         Cookie cookie = new Cookie("session", session.getKey());
         cookie.setPath("/");
         cookie.setMaxAge(Session.MAX_AGE);
+        cookie.setSecure(true);
         return cookie;
     }
 
